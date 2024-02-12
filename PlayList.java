@@ -21,12 +21,17 @@ class PlayList {
 
     /** Returns the current number of tracks in this play list. */
     public int getSize() {
+        size = 0;
+        for (int i = 0; i < maxSize; i++) {
+            if (tracks[i] != null)
+                size++;
+        }
         return size;
     }
 
     /** Method to get a track by index */
     public Track getTrack(int index) {
-        if (index >= 0 && index < size) {
+        if (index >= 0 && index < this.getSize()) {
             return tracks[index];
         } else {
             return null;
@@ -40,10 +45,10 @@ class PlayList {
      */
     public boolean add(Track track) {
         //// replace the following statement with your code
-        if (size == maxSize) {
+        if (this.getSize() == maxSize) {
             return false;
         }
-        tracks[size] = track;
+        tracks[this.getSize()] = track;
         return true;
     }
 
@@ -55,7 +60,7 @@ class PlayList {
     public String toString() {
         //// replace the following statement with your code
         StringBuilder str = new StringBuilder();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < this.getSize(); i++) {
             str.append(tracks[i].toString());
             str.append("\n");
         }
@@ -67,7 +72,7 @@ class PlayList {
      */
     public void removeLast() {
         //// replace this comment with your code
-        if (size != 0) {
+        if (this.getSize() != 0) {
             tracks[size - 1] = null;
         }
 
@@ -77,7 +82,7 @@ class PlayList {
     public int totalDuration() {
         //// replace the following statement with your code
         int sum = 0;
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < this.getSize(); i++) {
             sum += tracks[i].getDuration();
         }
         return sum;
@@ -89,7 +94,7 @@ class PlayList {
      */
     public int indexOf(String title) {
         //// replace the following statement with your code
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < this.getSize(); i++) {
             if (title == tracks[i].getTitle())
                 return i;
         }
@@ -106,17 +111,19 @@ class PlayList {
      */
     public boolean add(int i, Track track) {
         //// replace the following statement with your code
-        int j = size;
+        int j = this.getSize();
         if (i < 0 || i > maxSize)
             return false;
-        else if (size == maxSize)
+        if (this.getSize() == maxSize)
             return false;
-        if (size == 0) {
+        if (this.getSize() == 0) {
             tracks[0] = track;
             return true;
         }
         while (tracks[i] != null) {
             tracks[j] = tracks[j - 1];
+            if (tracks[j - 1] != null)
+                tracks[j - 1] = null;
             j--;
         }
         tracks[i] = track;
@@ -131,10 +138,11 @@ class PlayList {
      */
     public void remove(int i) {
         //// replace this comment with your code
-        if (i > 0)
-            if (i < size)
+        if (i > 0) {
+            if (i < this.getSize())
                 tracks[i] = null;
 
+        }
     }
 
     /**
@@ -145,7 +153,7 @@ class PlayList {
     public void remove(String title) {
         //// replace this comment with your code
         if (size != 0) {
-            for (int i = 0; i < size; i++) {
+            for (int i = 0; i < this.getSize(); i++) {
                 if (tracks[i].getTitle() == title) {
                     remove(i);
                     i = maxSize + 1;// to exit the for loop ASAP
@@ -159,7 +167,7 @@ class PlayList {
      */
     public void removeFirst() {
         //// replace this comment with your code
-        if (size != 0) {
+        if (this.getSize() != 0) {
             remove(0);
         }
     }
@@ -172,8 +180,8 @@ class PlayList {
     public void add(PlayList other) {
         //// replace this comment with your code
         int j = 0;
-        if (maxSize >= (size + other.getSize())) {
-            for (int i = size; i < size + other.getSize(); i++) {
+        if (maxSize >= (this.getSize() + other.getSize())) {
+            for (int i = this.getSize(); i < this.getSize() + other.getSize(); i++) {
                 tracks[i] = other.getTrack(j);
                 j++;
             }
@@ -190,12 +198,17 @@ class PlayList {
     private int minIndex(int start) {
         //// replace the following statement with your code
         int min = 0;
-        if (start < 0 || start > size - 1)
+        if (start < 0 || start > this.getSize() - 1)
             return -1;
-        for (int i = start; i < size; i++) {
-            if (tracks[i].getDuration() < tracks[i + 1].getDuration())
-                min = i;
+        for (int i = start; i < this.getMaxSize() - 1; i++) {
+            if (tracks[i] != null && tracks[i + 1] != null) {
+                if (tracks[i].getDuration() < tracks[i + 1].getDuration())
+                    min = i;
+                else
+                    min = i + 1;
+            }
         }
+
         return min;
     }
 
@@ -204,7 +217,7 @@ class PlayList {
      * If the list is empty, returns null.
      */
     public String titleOfShortestTrack() {
-        if (size == 0)
+        if (this.getSize() == 0)
             return null;
         return tracks[minIndex(0)].getTitle();
     }
@@ -219,11 +232,13 @@ class PlayList {
         // Uses the selection sort algorithm,
         // calling the minIndex method in each iteration.
         //// replace this statement with your code
-        for (int i = 0; i < size; i++) {
-            int smallest = minIndex(i);
+        int j = 0, smallest = 0;
+        for (int i = 0; i < this.getSize() - 1; i++) {
+            smallest = minIndex(i);
             Track swapper = tracks[smallest];
-            tracks[smallest] = tracks[i];
-            tracks[i] = swapper;
+            tracks[smallest] = tracks[j];
+            tracks[j] = swapper;
+            j++;
         }
     }
 }

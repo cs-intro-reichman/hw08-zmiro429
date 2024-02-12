@@ -90,51 +90,51 @@ public class PlayListTester {
         System.out.println("Track added: " + result);
     }
 
-        // Continue from the previous methods...
+    // Continue from the previous methods...
 
-        private static void testGetSize() {
-            System.out.println("Playlist Size: " + playList.getSize());
+    private static void testGetSize() {
+        System.out.println("Playlist Size: " + playList.getSize());
+    }
+
+    private static void testRemoveLast() {
+        playList.removeLast();
+        System.out.println("Last track removed. Current Size: " + playList.getSize());
+    }
+
+    private static void testTotalDuration() {
+        System.out.println("Total Duration: " + playList.totalDuration() + " seconds");
+    }
+
+    private static void testIndexOf(String title) {
+        int index = playList.indexOf(title);
+        System.out.println("Index of \"" + title + "\": " + index);
+    }
+
+    private static void testAddAtIndex(int index, String title, String artist, int duration) {
+        Track track = new Track(title, artist, duration);
+        boolean result = playList.add(index, track);
+        System.out.println("Track \"" + title + "\" added at index " + index + ": " + result);
+    }
+
+    private static void testRemoveAtIndex(int index) {
+        playList.remove(index);
+        System.out.println("Track at index " + index + " removed.");
+    }
+
+    private static void testTitleOfShortestTrack() {
+        String title = playList.titleOfShortestTrack();
+        if (title == null) {
+            System.out.println("The playlist is empty or an error occurred.");
+        } else {
+            System.out.println("Title of the shortest track: " + title);
         }
-    
-        private static void testRemoveLast() {
-            playList.removeLast();
-            System.out.println("Last track removed. Current Size: " + playList.getSize());
-        }
-    
-        private static void testTotalDuration() {
-            System.out.println("Total Duration: " + playList.totalDuration() + " seconds");
-        }
-    
-        private static void testIndexOf(String title) {
-            int index = playList.indexOf(title);
-            System.out.println("Index of \"" + title + "\": " + index);
-        }
-    
-        private static void testAddAtIndex(int index, String title, String artist, int duration) {
-            Track track = new Track(title, artist, duration);
-            boolean result = playList.add(index, track);
-            System.out.println("Track \"" + title + "\" added at index " + index + ": " + result);
-        }
-    
-        private static void testRemoveAtIndex(int index) {
-            playList.remove(index);
-            System.out.println("Track at index " + index + " removed.");
-        }
-    
-        private static void testTitleOfShortestTrack() {
-            String title = playList.titleOfShortestTrack();
-            if (title == null) {
-                System.out.println("The playlist is empty or an error occurred.");
-            } else {
-                System.out.println("Title of the shortest track: " + title);
-            }
-        }
-    
-        private static void testSortedInPlace() {
-            playList.sortedInPlace();
-            System.out.println("Playlist sorted by increasing duration. Playlist order:");
-            // Assuming PlayList.toString() is overridden to print track details in order
-            System.out.println(playList);
-        }
-    
+    }
+
+    private static void testSortedInPlace() {
+        playList.sortedInPlace();
+        System.out.println("Playlist sorted by increasing duration. Playlist order:");
+        // Assuming PlayList.toString() is overridden to print track details in order
+        System.out.println(playList);
+    }
+
 }
