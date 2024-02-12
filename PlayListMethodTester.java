@@ -48,14 +48,13 @@ public class PlayListMethodTester {
         }
     }
 
-
     private static void testRemoveLast() {
         PlayList playList = new PlayList(5);
         playList.add(new Track("Fernando", "ABBA", 354));
         playList.add(new Track("Imagine", "John Lennon", 187));
-    
+
         playList.removeLast(); // Should remove "Imagine"
-    
+
         if (playList.getSize() == 1 && playList.indexOf("Imagine") == -1) {
             System.out.println("testRemoveLast: PASS");
         } else {
@@ -82,9 +81,9 @@ public class PlayListMethodTester {
         playList.add(new Track("Fernando", "ABBA", 354));
         playList.add(new Track("Imagine", "John Lennon", 187));
         playList.add(new Track("Creep", "Radiohead", 369));
-    
+
         int index = playList.indexOf("Imagine");
-    
+
         if (index == 1) {
             System.out.println("testIndexOf: PASS");
         } else {
@@ -97,7 +96,7 @@ public class PlayListMethodTester {
         playList.add(new Track("Fernando", "ABBA", 354)); // Initial add to ensure the list isn't empty
 
         boolean result = playList.add(0, new Track("Yesterday", "The Beatles", 125)); // Add at the beginning
-        
+
         if (result && "Yesterday".equals(playList.getTrack(0).getTitle())) {
             System.out.println("testAddAtIndex: PASS");
         } else {
@@ -125,9 +124,9 @@ public class PlayListMethodTester {
         playList.add(new Track("Creep", "Radiohead", 369));
         playList.add(new Track("Yesterday", "The Beatles", 125)); // This should be the first after sorting
         playList.add(new Track("Fernando", "ABBA", 354));
-    
+
         playList.sortedInPlace();
-    
+
         // Assuming a method or approach to verify the order post-sort is implemented
         String firstTrackTitle = playList.getTrack(0).getTitle();
 
@@ -137,16 +136,15 @@ public class PlayListMethodTester {
             System.out.println("testSortedInPlace: FAIL. Expected 'Yesterday' to be first.");
         }
     }
-    
 
     private static void testTitleOfShortestTrack() {
         PlayList playList = new PlayList(5);
         playList.add(new Track("Creep", "Radiohead", 369));
         playList.add(new Track("Yesterday", "The Beatles", 125)); // This is the shortest
         playList.add(new Track("Fernando", "ABBA", 354));
-    
+
         String shortestTrack = playList.titleOfShortestTrack();
-    
+
         if ("Yesterday".equals(shortestTrack)) {
             System.out.println("testTitleOfShortestTrack: PASS");
         } else {
